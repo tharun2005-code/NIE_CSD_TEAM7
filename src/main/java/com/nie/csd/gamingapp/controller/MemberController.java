@@ -2,6 +2,7 @@ package com.nie.csd.gamingapp.controller;
 
 import com.nie.csd.gamingapp.model.Member;
 import com.nie.csd.gamingapp.service.MemberService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,8 +30,13 @@ public class MemberController {
 
     //Get Member by ID
     @GetMapping("/{id}")
-    public Optional<Member> getMemberById(@RequestParam String id) {
-        return memberService.getMemberById(id);
+    public ResponseEntity<Member> getMemberById(@PathVariable String id) {
+        Member member = memberService.getMemberById(id);
+        if(member!=null) {
+            return ResponseEntity.ok(member);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
     }
 
     //Get Member By Phone

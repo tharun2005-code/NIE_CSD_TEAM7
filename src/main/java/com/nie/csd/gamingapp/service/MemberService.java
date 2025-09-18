@@ -23,8 +23,8 @@ public class MemberService {
     public List<Member> getAllMembers(){
         return memberRepository.findAll();
     }
-    public Optional<Member> getMemberById(String id){
-        return memberRepository.findById(id);
+    public Member getMemberById(String id){
+        return memberRepository.findById(id).orElse(null);
     }
     public Optional<Member> getMemberByPhone(String phone){
         return memberRepository.findByPhone(phone);
