@@ -29,8 +29,17 @@ public class MemberService {
     public Optional<Member> getMemberByPhone(String phone){
         return memberRepository.findByPhone(phone);
     }
-    public Member updateMember(Member member){
-        return memberRepository.save(member);
+    public Member updateMember(String id,Member member){
+        Optional<Member> exMember=memberRepository.findById(id);
+        if(exMember.isPresent()){
+            Member exMem=exMember.get();
+            exMem.setName(member.getName());
+            exMem.setPhone(member.getPhone());
+            exMem.setBalance(member.getBalance());
+            return memberRepository.save(exMem);
+        }else{
+            return null;
+        }
     }
     public void deleteMemberById(String id){
         memberRepository.deleteById(id);

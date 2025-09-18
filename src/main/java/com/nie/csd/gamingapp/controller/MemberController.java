@@ -45,6 +45,11 @@ public class MemberController {
         return memberService.getMemberByPhone(phone);
     }
 
+    @PutMapping("/{id}")
+    public Member updateMember(@PathVariable String id, @RequestBody Member member) {
+        return memberService.updateMember(id, member);
+    }
+
     //Delete Member by Id
     @DeleteMapping("/{id}")
     public void deleteMemberById(@PathVariable String id) {
