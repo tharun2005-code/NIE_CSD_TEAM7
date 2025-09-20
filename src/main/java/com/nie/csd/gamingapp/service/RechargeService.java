@@ -18,6 +18,9 @@ public class RechargeService {
     @Autowired
     private MemberRepository memberRepository;
 
+    @Autowired
+    private CollectionService collectionService;
+
     public Recharge addRecharge(Recharge recharge) {
         // Save recharge record
         Recharge savedRecharge = rechargeRepository.save(recharge);
@@ -29,7 +32,7 @@ public class RechargeService {
             member.setBalance(member.getBalance() + recharge.getAmount());
             memberRepository.save(member);
         }
-
+        collectionService.addToCollection(recharge.getAmount());
         return savedRecharge;
     }
 

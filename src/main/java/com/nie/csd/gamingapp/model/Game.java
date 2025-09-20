@@ -8,14 +8,16 @@ public class Game {
     @Id
     private String id;
     private String name;
+    private Double price;
     private double costPerHour;
 
     public Game () {}
 
-    public Game(String id, String name, double costPerHour) {
+    public Game(String id, String name, double costPerHour,double price) {
         this.id = id;
         this.name = name;
         this.costPerHour = costPerHour;
+        this.price = price;
     }
 
     public String getId() {
@@ -41,4 +43,7 @@ public class Game {
     public void setCostPerHour(double costPerHour) {
         this.costPerHour = costPerHour;
     }
+    public Double getPrice() { return price; }
+    public void setPrice(Double price) { this.price = price; }
+
 }
