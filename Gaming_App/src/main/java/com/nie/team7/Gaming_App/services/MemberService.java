@@ -35,12 +35,8 @@ public class MemberService {
         membersRepository.deleteById(id);
     }
 
-    public Optional<Members> loginMember(String username, String password) {
-        return membersRepository.findByUsernameAndPassword(username, password);
-    }
-
-    public Optional<Members> getMemberByUsername(String username) {
-        return membersRepository.findByUsername(username);
+    public Optional<Members> getMemberByPhone(String phone) {
+        return membersRepository.findByPhone(phone);
     }
 
     public Double getMemberBalance(String memberId) {

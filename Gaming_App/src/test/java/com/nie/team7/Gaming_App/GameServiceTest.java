@@ -34,9 +34,11 @@ class GameServiceTest {
         testGame = new Games();
         testGame.setId("1");
         testGame.setName("Test Game");
-        testGame.setCategory("Action");
+        testGame.setDescription("A test game");
         testGame.setPrice(29.99);
         testGame.setStatus("Active");
+        testGame.setMinPlayerCount(1);
+        testGame.setMaxPlayerCount(4);
     }
 
     @Test
@@ -92,15 +94,15 @@ class GameServiceTest {
     }
 
     @Test
-    void testGetGamesByCategory() {
+    void testGetGamesByPriceRange() {
         List<Games> games = Arrays.asList(testGame);
-        when(gamesRepository.findByCategory("Action")).thenReturn(games);
+        when(gamesRepository.findByPriceBetween(20.0, 50.0)).thenReturn(games);
 
-        List<Games> result = gamesService.getGamesByCategory("Action");
+        List<Games> result = gamesService.getGamesByPriceRange(20.0, 50.0);
 
         assertEquals(1, result.size());
         assertEquals(testGame, result.get(0));
-        verify(gamesRepository).findByCategory("Action");
+        verify(gamesRepository).findByPriceBetween(20.0, 50.0);
     }
 
     @Test

@@ -33,8 +33,8 @@ class MemberServiceTest {
     void setUp() {
         testMember = new Members();
         testMember.setId("1");
-        testMember.setUsername("testuser");
-        testMember.setPassword("password");
+        testMember.setName("Test User");
+        testMember.setPhone("9876543210");
         testMember.setBalance(100.0);
     }
 
@@ -91,15 +91,15 @@ class MemberServiceTest {
     }
 
     @Test
-    void testLoginMember() {
-        when(membersRepository.findByUsernameAndPassword("testuser", "password"))
+    void testGetMemberByPhone() {
+        when(membersRepository.findByPhone("9876543210"))
                 .thenReturn(Optional.of(testMember));
 
-        Optional<Members> result = memberService.loginMember("testuser", "password");
+        Optional<Members> result = memberService.getMemberByPhone("9876543210");
 
         assertTrue(result.isPresent());
         assertEquals(testMember, result.get());
-        verify(membersRepository).findByUsernameAndPassword("testuser", "password");
+        verify(membersRepository).findByPhone("9876543210");
     }
 
     @Test

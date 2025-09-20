@@ -43,11 +43,7 @@ public class TransactionService {
         return transactionsRepository.findByGameId(gameId);
     }
 
-    public List<Transactions> getTransactionsByType(String type) {
-        return transactionsRepository.findByType(type);
-    }
-
-    public List<Transactions> getTransactionsByStatus(String status) {
-        return transactionsRepository.findByStatus(status);
+    public List<Transactions> getTransactionsByMemberIdOrderByDate(String memberId) {
+        return transactionsRepository.findByMemberIdOrderByDateTimeDesc(memberId);
     }
 }

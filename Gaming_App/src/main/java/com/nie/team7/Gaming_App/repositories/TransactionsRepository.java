@@ -7,6 +7,5 @@ import java.util.List;
 public interface TransactionsRepository extends MongoRepository<Transactions, String> {
     List<Transactions> findByMemberId(String memberId);
     List<Transactions> findByGameId(String gameId);
-    List<Transactions> findByType(String type);
-    List<Transactions> findByStatus(String status);
+    List<Transactions> findByMemberIdOrderByDateTimeDesc(String memberId);
 }

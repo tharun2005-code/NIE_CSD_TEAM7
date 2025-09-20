@@ -12,20 +12,16 @@ public class Members {
     private String id;
 
     private String name;
-    private String username;
-    private String password;
-    private Double balance;
+    private Double balance = 0.0;
     private String phone;
 
     // Constructors
     public Members() {}
 
-    public Members(String name, String username, String password, Double balance, String phone) {
+    public Members(String name, String phone, Double balance) {
         this.name = name;
-        this.username = username;
-        this.password = password;
-        this.balance = balance;
         this.phone = phone;
+        this.balance = balance != null ? balance : 0.0;
     }
 
     // Getters & Setters
@@ -34,12 +30,6 @@ public class Members {
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
-
-    public String getUsername() { return username; }
-    public void setUsername(String username) { this.username = username; }
-
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
 
     public Double getBalance() { return balance; }
     public void setBalance(Double balance) { this.balance = balance; }

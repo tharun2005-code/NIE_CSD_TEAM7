@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Date;
 
 @Service
 public class CollectionService {
@@ -35,15 +36,11 @@ public class CollectionService {
         collectionsRepository.deleteById(id);
     }
 
-    public List<Collections> getCollectionsByMemberId(String memberId) {
-        return collectionsRepository.findByMemberId(memberId);
+    public List<Collections> getCollectionsByDate(Date date) {
+        return collectionsRepository.findByDate(date);
     }
 
-    public List<Collections> getCollectionsByGameId(String gameId) {
-        return collectionsRepository.findByGameId(gameId);
-    }
-
-    public List<Collections> getCollectionsByStatus(String status) {
-        return collectionsRepository.findByStatus(status);
+    public List<Collections> getCollectionsByDateRange(Date startDate, Date endDate) {
+        return collectionsRepository.findByDateBetween(startDate, endDate);
     }
 }

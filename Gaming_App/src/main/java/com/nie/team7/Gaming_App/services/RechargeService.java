@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Date;
 
 @Service
 public class RechargeService {
@@ -39,7 +40,7 @@ public class RechargeService {
         return rechargesRepository.findByMemberId(memberId);
     }
 
-    public List<Recharges> getRechargesByStatus(String status) {
-        return rechargesRepository.findByStatus(status);
+    public List<Recharges> getRechargesByDateRange(Date startDate, Date endDate) {
+        return rechargesRepository.findByDateTimeBetween(startDate, endDate);
     }
 }

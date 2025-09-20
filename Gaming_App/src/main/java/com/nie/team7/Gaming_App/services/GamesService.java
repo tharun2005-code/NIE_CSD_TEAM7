@@ -35,9 +35,6 @@ public class GamesService {
         gamesRepository.deleteById(id);
     }
 
-    public List<Games> getGamesByCategory(String category) {
-        return gamesRepository.findByCategory(category);
-    }
 
     public List<Games> getGamesByStatus(String status) {
         return gamesRepository.findByStatus(status);
