@@ -13,7 +13,15 @@ const MemberDetailsPage = () => {
   if (!memberData) {
     return (
       <Layout>
-        <div className="text-center">No member data found. Please search for a member first.</div>
+        <div className="gaming-card rounded-2xl p-8 text-center gaming-glow">
+          <div className="flex items-center justify-center space-x-3 mb-4">
+            <div className="w-3 h-3 rounded-full gaming-glow-pink"></div>
+            <div className="w-3 h-3 rounded-full gaming-glow"></div>
+            <div className="w-3 h-3 rounded-full gaming-glow-blue"></div>
+          </div>
+          <h2 className="gaming-title text-2xl mb-4">No Member Data Found</h2>
+          <p className="gaming-subtitle text-lg">Please search for a member first</p>
+        </div>
       </Layout>
     );
   }
@@ -41,54 +49,71 @@ const MemberDetailsPage = () => {
 
   return (
     <Layout>
-      <div className="max-w-4xl mx-auto">
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">MEMBER DETAILS</h2>
+      <div className="max-w-6xl mx-auto">
+        <div className="gaming-card rounded-2xl p-8 gaming-glow">
+          <div className="text-center mb-8">
+            <div className="flex items-center justify-center space-x-3 mb-4">
+              <div className="w-3 h-3 rounded-full gaming-glow"></div>
+              <div className="w-3 h-3 rounded-full gaming-glow-pink"></div>
+              <div className="w-3 h-3 rounded-full gaming-glow-blue"></div>
+            </div>
+            <h2 className="gaming-title text-3xl mb-2">MEMBER DETAILS</h2>
+            <p className="gaming-subtitle text-lg">Gaming Club Member Profile</p>
+          </div>
           
           {/* Member Info */}
-          <div className="bg-gray-50 rounded-lg p-4 mb-6">
-            <div className="grid grid-cols-3 gap-4 text-sm">
-              <div>
-                <span className="font-medium">Name:</span> {member.name}
+          <div className="gaming-card rounded-xl p-6 mb-8 gaming-glow">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="text-center">
+                <div className="text-sm font-bold uppercase tracking-wide mb-2" style={{ color: 'var(--gaming-primary)' }}>
+                  Name
+                </div>
+                <div className="text-xl font-semibold" style={{ color: 'var(--gaming-text)' }}>
+                  {member.name}
+                </div>
               </div>
-              <div>
-                <span className="font-medium">Phone:</span> {member.phone}
+              <div className="text-center">
+                <div className="text-sm font-bold uppercase tracking-wide mb-2" style={{ color: 'var(--gaming-primary)' }}>
+                  Phone
+                </div>
+                <div className="text-xl font-semibold" style={{ color: 'var(--gaming-text)' }}>
+                  {member.phone}
+                </div>
               </div>
-              <div>
-                <span className="font-medium">Balance:</span> ₹{member.balance}
+              <div className="text-center">
+                <div className="text-sm font-bold uppercase tracking-wide mb-2" style={{ color: 'var(--gaming-primary)' }}>
+                  Balance
+                </div>
+                <div className="text-2xl font-bold gaming-glow" style={{ color: 'var(--gaming-accent)' }}>
+                  ₹{member.balance}
+                </div>
               </div>
             </div>
           </div>
 
           {/* Tab Navigation */}
-          <div className="border-b border-gray-200 mb-6">
-            <nav className="flex space-x-8">
+          <div className="mb-8">
+            <nav className="flex space-x-2">
               <button
                 onClick={() => setActiveTab('games')}
-                className={`py-2 px-1 border-b-2 font-medium text-sm ${
-                  activeTab === 'games'
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                className={`gaming-tab px-6 py-3 rounded-lg font-semibold uppercase tracking-wide transition-all duration-300 ${
+                  activeTab === 'games' ? 'active' : ''
                 }`}
               >
                 Games
               </button>
               <button
                 onClick={() => setActiveTab('recharge')}
-                className={`py-2 px-1 border-b-2 font-medium text-sm ${
-                  activeTab === 'recharge'
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                className={`gaming-tab px-6 py-3 rounded-lg font-semibold uppercase tracking-wide transition-all duration-300 ${
+                  activeTab === 'recharge' ? 'active' : ''
                 }`}
               >
                 Recharge History
               </button>
               <button
                 onClick={() => setActiveTab('played')}
-                className={`py-2 px-1 border-b-2 font-medium text-sm ${
-                  activeTab === 'played'
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                className={`gaming-tab px-6 py-3 rounded-lg font-semibold uppercase tracking-wide transition-all duration-300 ${
+                  activeTab === 'played' ? 'active' : ''
                 }`}
               >
                 Played Games
@@ -99,49 +124,59 @@ const MemberDetailsPage = () => {
           {/* Tab Content */}
           {activeTab === 'games' && (
             <div>
-              <h3 className="text-lg font-medium mb-4">List of Available Games:</h3>
+              <h3 className="gaming-subtitle text-xl mb-6">Available Games</h3>
               {playError && (
-                <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md mb-4">
-                  {playError}
+                <div className="bg-red-900/50 border-2 border-red-500 text-red-300 px-6 py-4 rounded-lg mb-6 gaming-glow-pink">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                    <span className="font-semibold text-lg">{playError}</span>
+                  </div>
                 </div>
               )}
               <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <table className="min-w-full">
+                  <thead>
+                    <tr className="border-b-2" style={{ borderColor: 'var(--gaming-primary)' }}>
+                      <th className="px-6 py-4 text-left text-sm font-bold uppercase tracking-wide" style={{ color: 'var(--gaming-primary)' }}>
                         Name
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-4 text-left text-sm font-bold uppercase tracking-wide" style={{ color: 'var(--gaming-primary)' }}>
                         Price
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-4 text-left text-sm font-bold uppercase tracking-wide" style={{ color: 'var(--gaming-primary)' }}>
                         Description
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-4 text-left text-sm font-bold uppercase tracking-wide" style={{ color: 'var(--gaming-primary)' }}>
                         Action
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
+                  <tbody className="divide-y" style={{ borderColor: 'var(--gaming-light-gray)' }}>
                     {games.map((game) => (
-                      <tr key={game.id}>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      <tr key={game.id} className="hover:gaming-glow transition-all duration-300">
+                        <td className="px-6 py-4 whitespace-nowrap text-lg font-semibold" style={{ color: 'var(--gaming-text)' }}>
                           {game.name}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        <td className="px-6 py-4 whitespace-nowrap text-lg font-bold" style={{ color: 'var(--gaming-accent)' }}>
                           ₹{game.price}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        <td className="px-6 py-4 text-lg" style={{ color: 'var(--gaming-text-muted)' }}>
                           {game.description}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <td className="px-6 py-4 whitespace-nowrap">
                           <button
                             onClick={() => handlePlayGame(game)}
                             disabled={playingGame === game.id || member.balance < game.price}
-                            className="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="gaming-btn px-6 py-2 rounded-lg text-sm font-bold uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed"
                           >
-                            {playingGame === game.id ? 'Playing...' : 'Play Game'}
+                            {playingGame === game.id ? (
+                              <div className="flex items-center space-x-2">
+                                <div className="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
+                                <span>Playing...</span>
+                              </div>
+                            ) : (
+                              'Play Game'
+                            )}
                           </button>
                         </td>
                       </tr>
@@ -154,26 +189,26 @@ const MemberDetailsPage = () => {
 
           {activeTab === 'recharge' && (
             <div>
-              <h3 className="text-lg font-medium mb-4">Recharge History:</h3>
+              <h3 className="gaming-subtitle text-xl mb-6">Recharge History</h3>
               <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <table className="min-w-full">
+                  <thead>
+                    <tr className="border-b-2" style={{ borderColor: 'var(--gaming-primary)' }}>
+                      <th className="px-6 py-4 text-left text-sm font-bold uppercase tracking-wide" style={{ color: 'var(--gaming-primary)' }}>
                         Date/Time
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-4 text-left text-sm font-bold uppercase tracking-wide" style={{ color: 'var(--gaming-primary)' }}>
                         Amount
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
+                  <tbody className="divide-y" style={{ borderColor: 'var(--gaming-light-gray)' }}>
                     {recharge_history.map((recharge, index) => (
-                      <tr key={index}>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <tr key={index} className="hover:gaming-glow transition-all duration-300">
+                        <td className="px-6 py-4 whitespace-nowrap text-lg" style={{ color: 'var(--gaming-text)' }}>
                           {new Date(recharge.dateTime).toLocaleString()}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        <td className="px-6 py-4 whitespace-nowrap text-lg font-bold" style={{ color: 'var(--gaming-accent)' }}>
                           ₹{recharge.amount}
                         </td>
                       </tr>
@@ -186,32 +221,32 @@ const MemberDetailsPage = () => {
 
           {activeTab === 'played' && (
             <div>
-              <h3 className="text-lg font-medium mb-4">Played Games History:</h3>
+              <h3 className="gaming-subtitle text-xl mb-6">Played Games History</h3>
               <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <table className="min-w-full">
+                  <thead>
+                    <tr className="border-b-2" style={{ borderColor: 'var(--gaming-primary)' }}>
+                      <th className="px-6 py-4 text-left text-sm font-bold uppercase tracking-wide" style={{ color: 'var(--gaming-primary)' }}>
                         Date/Time
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-4 text-left text-sm font-bold uppercase tracking-wide" style={{ color: 'var(--gaming-primary)' }}>
                         Game
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-4 text-left text-sm font-bold uppercase tracking-wide" style={{ color: 'var(--gaming-primary)' }}>
                         Amount
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
+                  <tbody className="divide-y" style={{ borderColor: 'var(--gaming-light-gray)' }}>
                     {played_history.map((transaction, index) => (
-                      <tr key={index}>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <tr key={index} className="hover:gaming-glow transition-all duration-300">
+                        <td className="px-6 py-4 whitespace-nowrap text-lg" style={{ color: 'var(--gaming-text)' }}>
                           {new Date(transaction.dateTime).toLocaleString()}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        <td className="px-6 py-4 whitespace-nowrap text-lg font-semibold" style={{ color: 'var(--gaming-text)' }}>
                           {transaction.gameId}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        <td className="px-6 py-4 whitespace-nowrap text-lg font-bold" style={{ color: 'var(--gaming-accent)' }}>
                           ₹{transaction.amount}
                         </td>
                       </tr>

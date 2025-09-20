@@ -34,57 +34,93 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div className="bg-white rounded-lg shadow-md p-8">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">GAMING CLUB APP</h1>
+    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      {/* Background Gaming Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full gaming-glow opacity-20"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 rounded-full gaming-glow-pink opacity-20"></div>
+        <div className="absolute top-1/2 right-1/3 w-32 h-32 rounded-full gaming-glow-blue opacity-20"></div>
+      </div>
+      
+      <div className="max-w-md w-full space-y-8 relative z-10">
+        <div className="gaming-card rounded-2xl p-10 gaming-glow">
+          <div className="text-center mb-10">
+            <div className="flex items-center justify-center space-x-3 mb-4">
+              <div className="w-4 h-4 rounded-full gaming-glow"></div>
+              <div className="w-4 h-4 rounded-full gaming-glow-pink"></div>
+              <div className="w-4 h-4 rounded-full gaming-glow-blue"></div>
+            </div>
+            <h1 className="gaming-title text-4xl mb-2">GAMING CLUB</h1>
+            <p className="gaming-subtitle text-lg">ADMIN PORTAL</p>
           </div>
           
           <form onSubmit={handleSubmit} className="space-y-6">
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md">
-                {error}
+              <div className="bg-red-900/50 border-2 border-red-500 text-red-300 px-4 py-3 rounded-lg gaming-glow-pink">
+                <div className="flex items-center space-x-2">
+                  <div className="w-2 h-2 rounded-full bg-red-500"></div>
+                  <span className="font-semibold">{error}</span>
+                </div>
               </div>
             )}
             
-            <div>
+            <div className="space-y-2">
+              <label className="block text-sm font-semibold uppercase tracking-wide" style={{ color: 'var(--gaming-primary)' }}>
+                Username
+              </label>
               <input
                 type="text"
                 name="username"
-                placeholder="Username"
+                placeholder="Enter your username"
                 value={credentials.username}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="gaming-input w-full px-4 py-4 rounded-lg text-lg font-medium"
               />
             </div>
             
-            <div>
+            <div className="space-y-2">
+              <label className="block text-sm font-semibold uppercase tracking-wide" style={{ color: 'var(--gaming-primary)' }}>
+                Password
+              </label>
               <input
                 type="password"
                 name="password"
-                placeholder="Password"
+                placeholder="Enter your password"
                 value={credentials.password}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="gaming-input w-full px-4 py-4 rounded-lg text-lg font-medium"
               />
             </div>
             
-            <div>
+            <div className="pt-4">
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="gaming-btn w-full py-4 px-6 rounded-lg text-lg font-bold uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {loading ? 'Logging in...' : 'Login'}
+                {loading ? (
+                  <div className="flex items-center justify-center space-x-2">
+                    <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
+                    <span>Logging in...</span>
+                  </div>
+                ) : (
+                  'Login'
+                )}
               </button>
             </div>
           </form>
           
-          <div className="mt-8 text-center text-sm text-gray-500">
-            © 2025 Gaming Club. All rights reserved.
+          <div className="mt-10 text-center">
+            <div className="flex items-center justify-center space-x-2 mb-3">
+              <div className="w-1 h-1 rounded-full gaming-glow"></div>
+              <div className="w-1 h-1 rounded-full gaming-glow-pink"></div>
+              <div className="w-1 h-1 rounded-full gaming-glow-blue"></div>
+            </div>
+            <p className="text-sm font-semibold uppercase tracking-wide" style={{ color: 'var(--gaming-text-muted)' }}>
+              © 2025 Gaming Club. All rights reserved.
+            </p>
           </div>
         </div>
       </div>

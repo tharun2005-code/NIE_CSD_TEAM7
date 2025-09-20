@@ -1,12 +1,28 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --gaming-primary: #00ff88;
+  --gaming-secondary: #ff0080;
+  --gaming-accent: #00d4ff;
+  --gaming-dark: #0a0a0a;
+  --gaming-darker: #050505;
+  --gaming-gray: #1a1a1a;
+  --gaming-light-gray: #2a2a2a;
+  --gaming-text: #ffffff;
+  --gaming-text-muted: #a0a0a0;
+}
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Rajdhani', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, var(--gaming-darker) 0%, var(--gaming-dark) 50%, var(--gaming-gray) 100%);
+  color: var(--gaming-text);
+  min-height: 100vh;
 }
 
 * {
@@ -15,4 +31,237 @@ body {
 
 #root {
   min-height: 100vh;
+}
+
+/* Gaming-themed scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--gaming-darker);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gaming-primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gaming-accent);
+}
+
+/* Gaming glow effects */
+.gaming-glow {
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+}
+
+.gaming-glow-pink {
+  box-shadow: 0 0 20px rgba(255, 0, 128, 0.3);
+}
+
+.gaming-glow-blue {
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+/* Gaming button styles */
+.gaming-btn {
+  background: linear-gradient(45deg, var(--gaming-primary), var(--gaming-accent));
+  border: none;
+  color: var(--gaming-dark);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.gaming-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 255, 136, 0.4);
+}
+
+.gaming-btn:active {
+  transform: translateY(0);
+}
+
+.gaming-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.gaming-btn:hover::before {
+  left: 100%;
+}
+
+/* Gaming input styles */
+.gaming-input {
+  background: var(--gaming-gray);
+  border: 2px solid var(--gaming-light-gray);
+  color: var(--gaming-text);
+  transition: all 0.3s ease;
+}
+
+.gaming-input:focus {
+  border-color: var(--gaming-primary);
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+  outline: none;
+}
+
+.gaming-input::placeholder {
+  color: var(--gaming-text-muted);
+}
+
+/* Gaming card styles */
+.gaming-card {
+  background: linear-gradient(145deg, var(--gaming-gray), var(--gaming-light-gray));
+  border: 1px solid var(--gaming-light-gray);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+/* Gaming text styles */
+.gaming-title {
+  font-family: 'Orbitron', monospace;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: linear-gradient(45deg, var(--gaming-primary), var(--gaming-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gaming-subtitle {
+  font-family: 'Orbitron', monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--gaming-primary);
+}
+
+/* Gaming animations */
+@keyframes gaming-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes gaming-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(0, 255, 136, 0.6);
+  }
+}
+
+.gaming-pulse {
+  animation: gaming-pulse 2s infinite;
+}
+
+.gaming-glow-animate {
+  animation: gaming-glow 2s infinite;
+}
+
+/* Gaming tab styles */
+.gaming-tab {
+  background: var(--gaming-gray);
+  border: 1px solid var(--gaming-light-gray);
+  color: var(--gaming-text-muted);
+  transition: all 0.3s ease;
+}
+
+.gaming-tab.active {
+  background: var(--gaming-primary);
+  color: var(--gaming-dark);
+  border-color: var(--gaming-primary);
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+}
+
+.gaming-tab:hover:not(.active) {
+  background: var(--gaming-light-gray);
+  color: var(--gaming-text);
+  border-color: var(--gaming-accent);
+}
+
+/* Gaming table styles */
+.gaming-table {
+  background: var(--gaming-gray);
+  border: 1px solid var(--gaming-light-gray);
+}
+
+.gaming-table th {
+  background: var(--gaming-light-gray);
+  color: var(--gaming-primary);
+  border-bottom: 2px solid var(--gaming-primary);
+}
+
+.gaming-table td {
+  border-bottom: 1px solid var(--gaming-light-gray);
+  color: var(--gaming-text);
+}
+
+.gaming-table tr:hover {
+  background: var(--gaming-light-gray);
+}
+
+/* Gaming status indicators */
+.gaming-status-online {
+  background: var(--gaming-primary);
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+.gaming-status-busy {
+  background: var(--gaming-secondary);
+  box-shadow: 0 0 10px rgba(255, 0, 128, 0.5);
+}
+
+.gaming-status-offline {
+  background: var(--gaming-text-muted);
+  box-shadow: 0 0 10px rgba(160, 160, 160, 0.3);
+}
+
+/* Gaming progress bars */
+.gaming-progress {
+  background: var(--gaming-gray);
+  border: 1px solid var(--gaming-light-gray);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.gaming-progress-bar {
+  background: linear-gradient(90deg, var(--gaming-primary), var(--gaming-accent));
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+/* Gaming notifications */
+.gaming-notification {
+  background: var(--gaming-gray);
+  border: 1px solid var(--gaming-light-gray);
+  border-left: 4px solid var(--gaming-primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.gaming-notification.success {
+  border-left-color: var(--gaming-primary);
+}
+
+.gaming-notification.error {
+  border-left-color: var(--gaming-secondary);
+}
+
+.gaming-notification.warning {
+  border-left-color: var(--gaming-accent);
 }
