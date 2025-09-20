@@ -5,6 +5,7 @@ import com.nie.team7.Gaming_App.repositories.TransactionsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,5 +46,9 @@ public class TransactionService {
 
     public List<Transactions> getTransactionsByMemberIdOrderByDate(String memberId) {
         return transactionsRepository.findByMemberIdOrderByDateTimeDesc(memberId);
+    }
+
+    public List<Transactions> getTransactionsByDateRange(Date startDate, Date endDate) {
+        return transactionsRepository.findByDateTimeBetween(startDate, endDate);
     }
 }
