@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -42,6 +43,18 @@ public class MemberController {
         
         Members member = new Members(name, phone, fee);
         Members createdMember = memberService.createMember(member);
+        
+        // Create a transaction record for the membership fee
+        if (createdMember != null && fee > 0) {
+            Transactions membershipTransaction = new Transactions(
+                createdMember.getId(), 
+                "MEMBERSHIP_FEE", // Special gameId for membership fees
+                fee, 
+                new Date()
+            );
+            transactionService.createTransaction(membershipTransaction);
+        }
+        
         return ResponseEntity.ok(createdMember);
     }
 
