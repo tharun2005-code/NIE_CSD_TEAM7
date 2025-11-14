@@ -1,122 +1,156 @@
-# NIE_CSD_TEAM7
-SDP September 2025 Ecommerce website collaborator
+# Gaming Club Management System
 
-stuff that was told to be added:
-```txt
-DATABASE:
+A full-stack web application for managing gaming center operations including membership management, game bookings, recharge tracking, and daily collections.
 
-1. Members (id, name, balance, phone)
+## Architecture
 
-2. Recharges (id, name(FK), price, description)
+- **Frontend**: React 18 + Vite + Tailwind CSS 4.1
+- **Backend**: Spring Boot 3.5.5 + Java 17
+- **Database**: MongoDB Atlas
+- **Authentication**: JWT-based authentication
 
-3\. Games(id, name, price, description)
-Extras => duration, status(active/inactive), min\_player\_count, max\_player\_count, player\_count\_multiple
+## Features
 
-4 Transactions (id, member\_id(FK), game\_id(FK), amount, date)
+- **Admin Authentication**: Secure login system
+- **Membership Management**: Create and manage gaming club members
+- **Member Search**: Search members by phone number
+- **Game Management**: Add games and manage game catalog
+- **Game Playing**: Play games with automatic balance deduction
+- **Balance Management**: Track member balances and transactions
+- **Collections**: View daily recharge collections by date
+- **Responsive UI**: Modern, mobile-friendly interface
 
+## Quick Start
+
+### Prerequisites
+- Java 17+
+- Node.js 18+
+- MongoDB Atlas account (or local MongoDB)
+- Maven 3.6+
+
+### 1. Clone Repository
+```bash
+git clone [repository-url]
+cd Gaming_App
 ```
 
-## The collections:
+### 2. Setup Backend
+```bash
+# Install dependencies and run
+mvn clean install
+mvn spring-boot:run
+```
+Backend will start on `http://localhost:8080`
 
-1. members
-    ```bash
-    db.createCollection("members", {
-        validator: {
-            $jsonSchema: {
-            bsonType: "object",
-            required: ["name", "phone"],
-            properties: {
-                name: { bsonType: "string" },
-                balance: { bsonType: "double" },
-                phone: { bsonType: "string" }
-            }
-            }
-        }
-    });
-    ```
-2. games
-    ```bash
-        db.createCollection("games", {
-        validator: {
-            $jsonSchema: {
-            bsonType: "object",
-            required: ["name", "price", "duration", "status", "min_player_count", "max_player_count", "player_count_multiple"],
-            properties: {
-                name: { bsonType: "string" },
-                price: { bsonType: "double" },
-                description: { bsonType: "string" },
-                
-                duration: { bsonType: "int" },  // or "double" if fractional allowed
-                status: { enum: ["active", "inactive"] }, // restrict to these values
-                min_player_count: { bsonType: "int" },
-                max_player_count: { bsonType: "int" },
-                player_count_multiple: { bsonType: "int" }
-                }
-            }
-            }
-        });
-    ```
+### 3. Setup Frontend
+```bash
+# Navigate to client directory
+cd client
 
-3. recharges
-    ```bash 
-    db.createCollection("recharges", {
-        validator: {
-            $jsonSchema: {
-            bsonType: "object",
-            required: ["memberId", "amount"],
-            properties: {
-                memberId: { bsonType: "objectId" },
-                amount: { bsonType: "double" },
-                dateTime: { bsonType: "date" }
-            }
-            }
-        }
-    });
-    ```
-4. transactions
-    ```bash
-    db.createCollection("transactions", {
-        validator: {
-            $jsonSchema: {
-            bsonType: "object",
-            required: ["memberId", "gameId", "amount"],
-            properties: {
-                memberId: { bsonType: "objectId" },
-                gameId: { bsonType: "objectId" },
-                amount: { bsonType: "double" },
-                dateTime: { bsonType: "date" }
-            }
-            }
-        }
-    });
-    ```
-5. collections
-    ```bash
-    db.createCollection("collections", {
-        validator: {
-            $jsonSchema: {
-            bsonType: "object",
-            required: ["date", "amount"],
-            properties: {
-                date: { bsonType: "date" },
-                amount: { bsonType: "double" }
-            }
-            }
-        }
-    });
-    ```
-6. admin_users
-    ```bash
-    db.createCollection("admin_users", {
-        validator: {
-            $jsonSchema: {
-            bsonType: "object",
-            required: ["username", "password"],
-            properties: {
-                username: { bsonType: "string" },
-                password: { bsonType: "string" }
-            }
-            }
-        }
-    });
-    ```
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+```
+Frontend will start on `http://localhost:3000`
+
+### 4. Access Application
+- Open browser to `http://localhost:3000`
+- Login with default credentials: `admin` / `admin`
+
+## API Endpoints
+
+### Authentication
+- `POST /auth` - Admin login
+
+### Members
+- `POST /members` - Create new member
+- `POST /members/search` - Search member by phone
+
+### Games
+- `GET /game` - Get all games
+- `POST /game` - Add new game
+- `POST /game/play` - Play game (deduct balance)
+
+### Collections
+- `GET /collection/{date}` - Get recharge collections for date
+
+## Project Structure
+
+```
+Gaming_App/
+├── client/                    # React frontend
+│   ├── src/
+│   │   ├── components/        # Reusable components
+│   │   ├── pages/            # Page components
+│   │   ├── context/          # React context (Auth)
+│   │   └── services/         # API services
+│   ├── package.json
+│   └── vite.config.js
+├── src/main/java/            # Spring Boot backend
+│   └── com/nie/team7/Gaming_App/
+│       ├── controllers/      # REST controllers
+│       ├── models/          # MongoDB entities
+│       ├── repositories/    # Data repositories
+│       ├── services/        # Business logic
+│       ├── security/        # JWT security
+│       └── config/          # Configuration
+├── pom.xml                  # Maven dependencies
+└── README.md
+```
+
+## Sample Data
+
+The application automatically creates:
+- Default admin user: `admin` / `admin`
+- Sample games: Chess (₹50), Carrom (₹100), Foosball (₹150)
+
+## Development
+
+### Adding New Features
+
+1. **Backend**: Add new controllers, services, and models following existing patterns
+2. **Frontend**: Create new pages and components using Tailwind CSS
+3. **API Integration**: Update `src/services/api.js` with new endpoints
+
+### Testing
+
+```bash
+# Backend tests
+mvn test
+
+# Frontend (when tests are added)
+cd client && npm test
+```
+
+## Deployment
+
+### Backend
+```bash
+mvn clean package
+java -jar target/Gaming_App-0.0.1-SNAPSHOT.war
+```
+
+### Frontend
+```bash
+cd client
+npm run build
+# Deploy dist/ folder to web server
+```
+
+## Default Credentials
+
+- **Username**: admin
+- **Password**: admin
+
+## Contributing
+
+1. Follow existing code patterns and naming conventions
+2. Ensure proper error handling
+3. Update documentation for new features
+4. Test thoroughly before submitting changes
+
+## License
+
+© 2025 Gaming Club. All rights reserved.

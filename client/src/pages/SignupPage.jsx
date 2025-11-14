@@ -1,34 +1,47 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useNavigate, Link } from 'react-router-dom';
+import { authAPI } from '../services/api';
 
-const LoginPage = () => {
-  const [credentials, setCredentials] = useState({ username: '', password: '' });
+const SignupPage = () => {
+  const [formData, setFormData] = useState({ username: '', password: '', confirmPassword: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   
-  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
+    setSuccess('');
 
-    const result = await login(credentials);
-    
-    if (result.success) {
-      navigate('/membership');
-    } else {
-      setError(result.error);
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      await authAPI.signup({
+        username: formData.username,
+        password: formData.password
+      });
+      
+      setSuccess('Account created successfully! Redirecting to login...');
+      setTimeout(() => {
+        navigate('/');
+      }, 2000);
+    } catch (error) {
+      setError(error.response?.data || 'Failed to create account');
     }
     
     setLoading(false);
   };
 
   const handleChange = (e) => {
-    setCredentials({
-      ...credentials,
+    setFormData({
+      ...formData,
       [e.target.name]: e.target.value
     });
   };
@@ -51,19 +64,28 @@ const LoginPage = () => {
               <div className="w-4 h-4 rounded-full gaming-glow-blue"></div>
             </div>
             <h1 className="gaming-title text-4xl mb-2">GAMING CLUB</h1>
-            <p className="gaming-subtitle text-lg">ADMIN PORTAL</p>
+            <p className="gaming-subtitle text-lg">ADMIN SIGNUP</p>
           </div>
           
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {error && (
-              <div className="bg-red-900/50 border-2 border-red-500 text-red-300 px-4 py-3 rounded-lg gaming-glow-pink">
-                <div className="flex items-center space-x-2">
-                  <div className="w-2 h-2 rounded-full bg-red-500"></div>
-                  <span className="font-semibold">{error}</span>
-                </div>
+          {success && (
+            <div className="bg-green-900/50 border-2 border-green-500 text-green-300 px-4 py-3 rounded-lg mb-6 gaming-glow">
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                <span className="font-semibold">{success}</span>
               </div>
-            )}
-            
+            </div>
+          )}
+
+          {error && (
+            <div className="bg-red-900/50 border-2 border-red-500 text-red-300 px-4 py-3 rounded-lg mb-6 gaming-glow-pink">
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 rounded-full bg-red-500"></div>
+                <span className="font-semibold">{error}</span>
+              </div>
+            </div>
+          )}
+          
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
               <label className="block text-sm font-semibold uppercase tracking-wide" style={{ color: 'var(--gaming-primary)' }}>
                 Username
@@ -72,7 +94,7 @@ const LoginPage = () => {
                 type="text"
                 name="username"
                 placeholder="Enter your username"
-                value={credentials.username}
+                value={formData.username}
                 onChange={handleChange}
                 required
                 className="gaming-input w-full px-4 py-4 rounded-lg text-lg font-medium"
@@ -87,7 +109,22 @@ const LoginPage = () => {
                 type="password"
                 name="password"
                 placeholder="Enter your password"
-                value={credentials.password}
+                value={formData.password}
+                onChange={handleChange}
+                required
+                className="gaming-input w-full px-4 py-4 rounded-lg text-lg font-medium"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-semibold uppercase tracking-wide" style={{ color: 'var(--gaming-primary)' }}>
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirm your password"
+                value={formData.confirmPassword}
                 onChange={handleChange}
                 required
                 className="gaming-input w-full px-4 py-4 rounded-lg text-lg font-medium"
@@ -103,14 +140,23 @@ const LoginPage = () => {
                 {loading ? (
                   <div className="flex items-center justify-center space-x-2">
                     <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
-                    <span>Logging in...</span>
+                    <span>Creating Account...</span>
                   </div>
                 ) : (
-                  'Login'
+                  'Sign Up'
                 )}
               </button>
             </div>
           </form>
+
+          <div className="mt-6 text-center">
+            <p className="text-sm" style={{ color: 'var(--gaming-text-muted)' }}>
+              Already have an account?{' '}
+              <Link to="/" className="font-semibold" style={{ color: 'var(--gaming-primary)' }}>
+                Login
+              </Link>
+            </p>
+          </div>
           
           <div className="mt-10 text-center">
             <div className="flex items-center justify-center space-x-2 mb-3">
@@ -128,4 +174,5 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default SignupPage;
+

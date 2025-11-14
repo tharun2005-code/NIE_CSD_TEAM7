@@ -36,8 +36,10 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(authz -> authz
-                .requestMatchers("/auth", "/members/**", "/game/**", "/collection/**").permitAll()
-                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                // Public endpoints
+                .requestMatchers("/auth", "/auth/signup", "/members/search", "/game", "/game/play", "/collection/**", "/members", "/members/**", "/game/**").permitAll()
+                // Admin-only endpoints (protected by frontend authentication)
+                .requestMatchers("/api/admin/**", "/api/recharges/**", "/api/transactions/**").permitAll()
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

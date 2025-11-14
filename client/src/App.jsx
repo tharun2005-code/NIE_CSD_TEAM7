@@ -2,11 +2,17 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
 import MembershipPage from './pages/MembershipPage';
 import MemberSearchPage from './pages/MemberSearchPage';
 import MemberDetailsPage from './pages/MemberDetailsPage';
+import MemberManagementPage from './pages/MemberManagementPage';
 import AddGamePage from './pages/AddGamePage';
+import GameManagementPage from './pages/GameManagementPage';
 import CollectionsPage from './pages/CollectionsPage';
+import AdminManagementPage from './pages/AdminManagementPage';
+import RechargeManagementPage from './pages/RechargeManagementPage';
+import TransactionManagementPage from './pages/TransactionManagementPage';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -41,6 +47,7 @@ function App() {
         <div className="App">
           <Routes>
             <Route path="/" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
             <Route 
               path="/membership" 
               element={
@@ -66,6 +73,14 @@ function App() {
               } 
             />
             <Route 
+              path="/member-management" 
+              element={
+                <ProtectedRoute>
+                  <MemberManagementPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
               path="/add-game" 
               element={
                 <ProtectedRoute>
@@ -74,10 +89,42 @@ function App() {
               } 
             />
             <Route 
+              path="/game-management" 
+              element={
+                <ProtectedRoute>
+                  <GameManagementPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
               path="/collections" 
               element={
                 <ProtectedRoute>
                   <CollectionsPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/admin-management" 
+              element={
+                <ProtectedRoute>
+                  <AdminManagementPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/recharge-management" 
+              element={
+                <ProtectedRoute>
+                  <RechargeManagementPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/transaction-management" 
+              element={
+                <ProtectedRoute>
+                  <TransactionManagementPage />
                 </ProtectedRoute>
               } 
             />

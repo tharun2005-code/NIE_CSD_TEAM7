@@ -85,4 +85,29 @@ public class MemberController {
         
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping
+    public ResponseEntity<List<Members>> getAllMembers() {
+        List<Members> members = memberService.getAllMembers();
+        return ResponseEntity.ok(members);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Members> getMemberById(@PathVariable String id) {
+        Optional<Members> member = memberService.getMemberById(id);
+        return member.map(ResponseEntity::ok)
+                   .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Members> updateMember(@PathVariable String id, @RequestBody Members member) {
+        Members updatedMember = memberService.updateMember(id, member);
+        return ResponseEntity.ok(updatedMember);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteMember(@PathVariable String id) {
+        memberService.deleteMember(id);
+        return ResponseEntity.noContent().build();
+    }
 }

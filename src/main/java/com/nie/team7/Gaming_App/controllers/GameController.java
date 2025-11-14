@@ -79,4 +79,23 @@ public class GameController {
         List<Games> games = gamesService.getAllGames();
         return ResponseEntity.ok(games);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Games> getGameById(@PathVariable String id) {
+        Optional<Games> game = gamesService.getGameById(id);
+        return game.map(ResponseEntity::ok)
+                  .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Games> updateGame(@PathVariable String id, @RequestBody Games game) {
+        Games updatedGame = gamesService.updateGame(id, game);
+        return ResponseEntity.ok(updatedGame);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteGame(@PathVariable String id) {
+        gamesService.deleteGame(id);
+        return ResponseEntity.noContent().build();
+    }
 }

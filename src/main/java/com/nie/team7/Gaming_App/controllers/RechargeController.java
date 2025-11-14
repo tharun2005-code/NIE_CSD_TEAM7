@@ -1,12 +1,16 @@
 package com.nie.team7.Gaming_App.controllers;
 
 import com.nie.team7.Gaming_App.models.Recharges;
+import com.nie.team7.Gaming_App.models.Members;
 import com.nie.team7.Gaming_App.services.RechargeService;
+import com.nie.team7.Gaming_App.services.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -16,6 +20,9 @@ public class RechargeController {
 
     @Autowired
     private RechargeService rechargeService;
+
+    @Autowired
+    private MemberService memberService;
 
     @GetMapping
     public ResponseEntity<List<Recharges>> getAllRecharges() {
@@ -31,8 +38,25 @@ public class RechargeController {
     }
 
     @PostMapping
-    public ResponseEntity<Recharges> createRecharge(@RequestBody Recharges recharge) {
+    public ResponseEntity<?> createRecharge(@RequestBody Map<String, Object> rechargeData) {
+        String memberId = rechargeData.get("memberId").toString();
+        Double amount = Double.valueOf(rechargeData.get("amount").toString());
+        
+        // Check if member exists
+        Optional<Members> memberOpt = memberService.getMemberById(memberId);
+        if (memberOpt.isEmpty()) {
+            return ResponseEntity.badRequest().body("Member not found");
+        }
+        
+        // Create recharge
+        Recharges recharge = new Recharges(memberId, amount, new Date());
         Recharges createdRecharge = rechargeService.createRecharge(recharge);
+        
+        // Update member balance
+        Members member = memberOpt.get();
+        member.setBalance(member.getBalance() + amount);
+        memberService.updateMember(memberId, member);
+        
         return ResponseEntity.ok(createdRecharge);
     }
 

@@ -31,4 +31,30 @@ public class AuthController {
             return ResponseEntity.badRequest().body("Invalid credentials");
         }
     }
+
+    @PostMapping("/signup")
+    public ResponseEntity<?> signup(@RequestBody Map<String, String> signupRequest) {
+        String username = signupRequest.get("username");
+        String password = signupRequest.get("password");
+        
+        if (username == null || username.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("Username is required");
+        }
+        
+        if (password == null || password.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("Password is required");
+        }
+        
+        // Check if username already exists
+        Optional<AdminUsers> existingAdmin = adminService.getAdminByUsername(username);
+        if (existingAdmin.isPresent()) {
+            return ResponseEntity.badRequest().body("Username already exists");
+        }
+        
+        // Create new admin
+        AdminUsers newAdmin = new AdminUsers(username, password);
+        AdminUsers createdAdmin = adminService.createAdmin(newAdmin);
+        
+        return ResponseEntity.ok(createdAdmin);
+    }
 }
